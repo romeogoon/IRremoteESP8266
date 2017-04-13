@@ -853,6 +853,7 @@ bool ICACHE_FLASH_ATTR IRrecv::decode(decode_results *results,
   if (decodeRCMM(results)) {
     return true;
   }
+  yield();  // Play it safe & yield for a bit.
 #ifdef DEBUG
   Serial.println("Attempting Panasonic decode");
 #endif
@@ -898,6 +899,7 @@ bool ICACHE_FLASH_ATTR IRrecv::decode(decode_results *results,
   // Throw away and start over
   if (!resummed)  // Check if we have already resummed.
     resume();
+  yield();
   return false;
 }
 
@@ -1040,6 +1042,7 @@ bool ICACHE_FLASH_ATTR IRrecv::decodeNEC(decode_results *results) {
   results->bits = NEC_BITS;
   results->value = data;
   results->decode_type = NEC;
+  yield();
   return true;
 }
 
@@ -1092,6 +1095,7 @@ bool ICACHE_FLASH_ATTR IRrecv::decodeSony(decode_results *results) {
   }
   results->value = data;
   results->decode_type = SONY;
+  yield();
   return true;
 }
 
@@ -1149,6 +1153,7 @@ bool ICACHE_FLASH_ATTR IRrecv::decodeWhynter(decode_results *results) {
   results->bits = WHYNTER_BITS;
   results->value = data;
   results->decode_type = WHYNTER;
+  yield();
   return true;
 }
 
@@ -1214,6 +1219,7 @@ bool ICACHE_FLASH_ATTR IRrecv::decodeSanyo(decode_results *results) {
   }
   results->value = data;
   results->decode_type = SANYO;
+  yield();
   return true;
 }
 
@@ -1280,6 +1286,7 @@ bool ICACHE_FLASH_ATTR IRrecv::decodeMitsubishi(decode_results *results) {
   }
   results->value = data;
   results->decode_type = MITSUBISHI;
+  yield();
   return true;
 }
 
@@ -1356,6 +1363,7 @@ bool ICACHE_FLASH_ATTR IRrecv::decodeRC5(decode_results *results) {
   results->bits = nbits;
   results->value = data;
   results->decode_type = RC5;
+  yield();
   return true;
 }
 
@@ -1405,6 +1413,7 @@ bool ICACHE_FLASH_ATTR IRrecv::decodeRC6(decode_results *results) {
   results->bits = nbits;
   results->value = data;
   results->decode_type = RC6;
+  yield();
   return true;
 }
 
@@ -1458,6 +1467,7 @@ bool ICACHE_FLASH_ATTR IRrecv::decodeRCMM(decode_results *results) {
   results->value = (unsigned long) data;
   results->decode_type = RCMM;
   results->bits = bitSize;
+  yield();
   return true;
 }
 
@@ -1490,6 +1500,7 @@ bool ICACHE_FLASH_ATTR IRrecv::decodePanasonic(decode_results *results) {
   results->panasonicAddress = (unsigned int)(data >> 32);
   results->decode_type = PANASONIC;
   results->bits = PANASONIC_BITS;
+  yield();
   return true;
 }
 
@@ -1532,6 +1543,7 @@ bool ICACHE_FLASH_ATTR IRrecv::decodeLG(decode_results *results) {
   results->bits = LG_BITS;
   results->value = data;
   results->decode_type = LG;
+  yield();
   return true;
 }
 
@@ -1582,6 +1594,7 @@ bool ICACHE_FLASH_ATTR IRrecv::decodeJVC(decode_results *results) {
   results->bits = JVC_BITS;
   results->value = data;
   results->decode_type = JVC;
+  yield();
   return true;
 }
 
@@ -1629,6 +1642,7 @@ bool ICACHE_FLASH_ATTR IRrecv::decodeSAMSUNG(decode_results *results) {
   results->bits = SAMSUNG_BITS;
   results->value = data;
   results->decode_type = SAMSUNG;
+  yield();
   return true;
 }
 
@@ -1716,6 +1730,7 @@ bool ICACHE_FLASH_ATTR IRrecv::decodeDaikin(decode_results *results) {
   results->bits = DAIKIN_BITS;
   results->value = reversed;
   results->decode_type = DAIKIN;
+  yield();
   return true;
 }
 
@@ -1757,9 +1772,10 @@ bool ICACHE_FLASH_ATTR IRrecv::decodeDenon (decode_results *results) {
 	}
 
 	// Success
-	results->bits = DENON_BITS;
+  results->bits = DENON_BITS;
 	results->value = data;
 	results->decode_type = DENON;
+  yield();
 	return true;
 }
 
@@ -1814,6 +1830,7 @@ bool ICACHE_FLASH_ATTR IRrecv::decodeHash(decode_results *results) {
   results->value = hash;
   results->bits = 32;
   results->decode_type = UNKNOWN;
+  yield();
   return true;
 }
 
